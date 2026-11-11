@@ -73,7 +73,7 @@ export default function NovoLembrete() {
   const [diario, setDiario] = useState(false);
   const [salvando, setSalvando] = useState(false);
 
-  // PRIORIDADE PADRÃO
+
   const [prioridade, setPrioridade] = useState<Prioridade>('media');
 
   const styles = StyleSheet.create({
@@ -215,8 +215,7 @@ export default function NovoLembrete() {
       marginTop: 7,
     },
   });
-
-  // OPÇÕES DE PRIORIDADE
+ 
 
   const opcoesPrioridade: {
     valor: Prioridade;
@@ -345,7 +344,7 @@ export default function NovoLembrete() {
       contentContainerStyle={styles.conteudo}
       keyboardShouldPersistTaps="handled"
     >
-      {/* CABEÇALHO */}
+    
 
       <View style={styles.cabecalho}>
         <TouchableOpacity
@@ -364,7 +363,7 @@ export default function NovoLembrete() {
         </Text>
       </View>
 
-      {/* INFORMAÇÕES */}
+
 
       <View style={styles.painel}>
         <CampoTexto
@@ -386,7 +385,7 @@ export default function NovoLembrete() {
         />
       </View>
 
-      {/* DATA E HORÁRIO */}
+     
 
       <View style={styles.painel}>
         <Text style={styles.labelPainel}>
@@ -470,7 +469,7 @@ export default function NovoLembrete() {
         )}
       </View>
 
-      {/* PRIORIDADE */}
+     
 
       <View style={styles.painel}>
         <Text style={styles.labelPainel}>
@@ -536,7 +535,7 @@ export default function NovoLembrete() {
         </View>
       </View>
 
-      {/* REPETIÇÃO DIÁRIA */}
+      
 
       <View style={styles.opcaoDiaria}>
         <View style={styles.textoDiario}>
@@ -560,7 +559,7 @@ export default function NovoLembrete() {
         />
       </View>
 
-      {/* BOTÕES */}
+      
 
       <View style={styles.botoes}>
         <View style={styles.botaoMetade}>

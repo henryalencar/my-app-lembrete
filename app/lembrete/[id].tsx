@@ -28,7 +28,7 @@ import { useLembrete } from '../../hooks/useLembrete';
 import { useTema } from '../../contexts/themeContexts';
 import { Lembrete, Prioridade } from '../../types/lembrete';
 
-// CONVERTER DATA DO BANCO
+
 function converterData(data: string): Date {
   const [ano, mes, dia] = data.split('-').map(Number);
   const resultado = new Date(ano, mes - 1, dia);
@@ -36,7 +36,7 @@ function converterData(data: string): Date {
   return Number.isNaN(resultado.getTime()) ? new Date() : resultado;
 }
 
-// CONVERTER HORÁRIO DO BANCO
+
 function converterHorario(horario: string): Date {
   const [hora, minuto] = horario.split(':').map(Number);
   const resultado = new Date();
@@ -51,7 +51,7 @@ function converterHorario(horario: string): Date {
   return resultado;
 }
 
-// FORMATAR DATA
+
 function formatarData(data: Date): string {
   const ano = data.getFullYear();
   const mes = String(data.getMonth() + 1).padStart(2, '0');
@@ -60,7 +60,7 @@ function formatarData(data: Date): string {
   return `${ano}-${mes}-${dia}`;
 }
 
-// FORMATAR HORÁRIO
+
 function formatarHorario(data: Date): string {
   const hora = String(data.getHours()).padStart(2, '0');
   const minuto = String(data.getMinutes()).padStart(2, '0');
@@ -68,7 +68,7 @@ function formatarHorario(data: Date): string {
   return `${hora}:${minuto}`;
 }
 
-// DATA LEGÍVEL
+
 function dataLegivel(data: Date): string {
   return data.toLocaleDateString('pt-BR', {
     day: '2-digit',
@@ -77,7 +77,6 @@ function dataLegivel(data: Date): string {
   });
 }
 
-// OPÇÕES DE PRIORIDADE
 const opcoesPrioridade = [
   {
     id: 'baixa',
@@ -118,7 +117,7 @@ export default function EditarLembrete() {
     remover,
   } = useLembrete();
 
-  // DADOS DO LEMBRETE
+
   const [titulo, setTitulo] = useState('');
   const [nota, setNota] = useState('');
 
@@ -128,19 +127,19 @@ export default function EditarLembrete() {
   const [diario, setDiario] = useState(false);
   const [prioridade, setPrioridade] = useState<Prioridade>('media');
 
-  // CONTROLE DOS SELETORES
+
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
   const [mostrarRelogio, setMostrarRelogio] = useState(false);
 
   const [salvando, setSalvando] = useState(false);
   const [inicializado, setInicializado] = useState(false);
 
-  // BUSCAR LEMBRETE
+ 
   const lembrete = lembretes.find(
     (item) => String(item.id) === String(id)
   );
 
-  // CARREGAR DADOS
+
   useEffect(() => {
     if (!lembrete || inicializado) return;
 
@@ -161,14 +160,14 @@ export default function EditarLembrete() {
     }
   }
 
-  // ALTERAR HORÁRIO
+
   function alterarHorario(evento: DateTimePickerEvent, novoHorario?: Date) {
     if (evento.type === 'set' && novoHorario) {
       setHorarioSelecionado(novoHorario);
     }
   }
 
-  // ABRIR CALENDÁRIO
+
   function abrirCalendario() {
     if (Platform.OS === 'android') {
       DateTimePickerAndroid.open({
@@ -185,7 +184,7 @@ export default function EditarLembrete() {
     setMostrarCalendario(true);
   }
 
-  // ABRIR RELÓGIO
+ 
   function abrirRelogio() {
     if (Platform.OS === 'android') {
       DateTimePickerAndroid.open({
@@ -202,7 +201,7 @@ export default function EditarLembrete() {
     setMostrarRelogio(true);
   }
 
-  // SALVAR ALTERAÇÕES
+
   async function salvar() {
     if (!lembrete || salvando) return;
 
@@ -274,7 +273,7 @@ export default function EditarLembrete() {
     }
   }
 
-  // EXCLUIR LEMBRETE
+  
   function confirmarExclusao() {
     if (!lembrete) return;
 
@@ -554,7 +553,7 @@ export default function EditarLembrete() {
     },
   });
 
-  // CARREGAMENTO
+  
   if (carregando) {
     return (
       <View style={estilos.centralizado}>
@@ -563,7 +562,7 @@ export default function EditarLembrete() {
     );
   }
 
-  // LEMBRETE NÃO ENCONTRADO
+  
   if (!lembrete) {
     return (
       <View style={estilos.centralizado}>
@@ -579,7 +578,7 @@ export default function EditarLembrete() {
     );
   }
 
-  // AGUARDANDO DADOS
+ 
   if (!inicializado) {
     return (
       <View style={estilos.centralizado}>
@@ -595,7 +594,7 @@ export default function EditarLembrete() {
         contentContainerStyle={estilos.conteudo}
         keyboardShouldPersistTaps="handled"
       >
-        {/* CABEÇALHO */}
+        
         <View style={estilos.cabecalho}>
           <TouchableOpacity
             onPress={() => router.back()}
@@ -624,7 +623,7 @@ export default function EditarLembrete() {
           </TouchableOpacity>
         </View>
 
-        {/* INFORMAÇÕES */}
+       
         <View style={estilos.painel}>
           <CampoTexto
             label="Título"
@@ -645,7 +644,7 @@ export default function EditarLembrete() {
           />
         </View>
 
-        {/* DATA E HORÁRIO */}
+        
         <View style={estilos.painel}>
           <Text style={estilos.labelPainel}>
             Data e horário
@@ -708,7 +707,7 @@ export default function EditarLembrete() {
           </TouchableOpacity>
         </View>
 
-        {/* PRIORIDADE */}
+        
         <View style={estilos.painelPrioridade}>
           <Text style={estilos.labelPainel}>
             Prioridade do lembrete
@@ -768,7 +767,7 @@ export default function EditarLembrete() {
           </View>
         </View>
 
-        {/* REPETIÇÃO DIÁRIA */}
+        
         <View style={estilos.opcaoDiaria}>
           <View style={estilos.textoDiario}>
             <Text style={estilos.tituloDiario}>
@@ -791,7 +790,7 @@ export default function EditarLembrete() {
           />
         </View>
 
-        {/* BOTÕES */}
+      
         <View style={estilos.botoes}>
           <View style={estilos.botaoMetade}>
             <Botao
@@ -811,7 +810,7 @@ export default function EditarLembrete() {
           </View>
         </View>
 
-        {/* EXCLUIR */}
+        
         <TouchableOpacity
           style={estilos.botaoExcluir}
           onPress={confirmarExclusao}
@@ -828,7 +827,7 @@ export default function EditarLembrete() {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* MODAL DE DATA - IOS */}
+     
       {Platform.OS === 'ios' && (
         <Modal
           visible={mostrarCalendario}
@@ -885,7 +884,7 @@ export default function EditarLembrete() {
         </Modal>
       )}
 
-      {/* MODAL DE HORÁRIO - IOS */}
+      
       {Platform.OS === 'ios' && (
         <Modal
           visible={mostrarRelogio}

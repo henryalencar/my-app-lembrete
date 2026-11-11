@@ -41,8 +41,7 @@ export default function Configuracoes() {
       contentContainerStyle={styles.conteudo}
       showsVerticalScrollIndicator={false}
     >
-      {/* CABEÇALHO */}
-
+      
       <View style={styles.cabecalho}>
         <TouchableOpacity
           style={[
@@ -74,7 +73,7 @@ export default function Configuracoes() {
         </View>
       </View>
 
-      {/* APARÊNCIA */}
+     
 
       <Text style={[styles.secaoTitulo, { color: cores.texto }]}>
         Aparência
@@ -122,7 +121,7 @@ export default function Configuracoes() {
         </View>
       </View>
 
-      {/* PERSONALIZAÇÃO DE CORES */}
+      
 
       <Text style={[styles.secaoTitulo, { color: cores.texto }]}>
         Personalização
@@ -205,7 +204,7 @@ export default function Configuracoes() {
           })}
         </View>
 
-        {/* PRÉVIA */}
+       
 
         <View
           style={[
@@ -245,7 +244,7 @@ export default function Configuracoes() {
         </View>
       </View>
 
-      {/* SOBRE */}
+  
 
       <Text style={[styles.secaoTitulo, { color: cores.texto }]}>
         Sobre
