@@ -77,7 +77,7 @@ export default function Diarios() {
         { backgroundColor: cores.fundo },
       ]}
     >
-      {/* CABEÇALHO */}
+      
 
       <View style={styles.cabecalho}>
         <View>
@@ -123,7 +123,7 @@ export default function Diarios() {
         </View>
       </View>
 
-      {/* INFORMAÇÃO */}
+     
 
       <View
         style={[
@@ -148,7 +148,7 @@ export default function Diarios() {
         </Text>
       </View>
 
-      {/* LISTA DE LEMBRETES */}
+    
 
       <FlatList
         data={diarios}
