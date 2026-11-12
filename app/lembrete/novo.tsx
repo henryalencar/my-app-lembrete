@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 
 import {
   View,
@@ -72,9 +73,20 @@ export default function NovoLembrete() {
 
   const [diario, setDiario] = useState(false);
   const [salvando, setSalvando] = useState(false);
-
+  const [sucesso, setSucesso] = useState(false);
 
   const [prioridade, setPrioridade] = useState<Prioridade>('media');
+
+ 
+  useEffect(() => {
+    if (!sucesso) return;
+
+    const temporizador = setTimeout(() => {
+      router.back();
+    }, 2200);
+
+    return () => clearTimeout(temporizador);
+  }, [sucesso, router]);
 
   const styles = StyleSheet.create({
     container: {
@@ -187,8 +199,6 @@ export default function NovoLembrete() {
       flex: 1,
     },
 
-    // ESTILOS DAS PRIORIDADES
-
     descricaoPrioridade: {
       fontSize: 12,
       color: cores.textoSecundario,
@@ -214,8 +224,36 @@ export default function NovoLembrete() {
       fontWeight: '700',
       marginTop: 7,
     },
+
+    
+    mensagemSucesso: {
+      backgroundColor: modoEscuro ? '#163B2A' : '#DCFCE7',
+      borderColor: '#16A34A',
+      borderWidth: 1,
+      borderRadius: 14,
+      padding: 15,
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 20,
+      gap: 12,
+    },
+
+    textoMensagemSucesso: {
+      flex: 1,
+    },
+
+    tituloSucesso: {
+      color: modoEscuro ? '#86EFAC' : '#166534',
+      fontSize: 15,
+      fontWeight: '800',
+    },
+
+    descricaoSucesso: {
+      color: modoEscuro ? '#BBF7D0' : '#15803D',
+      fontSize: 12,
+      marginTop: 4,
+    },
   });
- 
 
   const opcoesPrioridade: {
     valor: Prioridade;
@@ -274,7 +312,7 @@ export default function NovoLembrete() {
   }
 
   async function salvar() {
-    if (salvando) return;
+    if (salvando || sucesso) return;
 
     if (!titulo.trim()) {
       Alert.alert('Atenção', 'Digite o título do lembrete.');
@@ -323,7 +361,8 @@ export default function NovoLembrete() {
 
       await adicionar(novoLembrete);
 
-      router.back();
+      
+      setSucesso(true);
 
     } catch (erro) {
       console.error('Erro ao salvar lembrete:', erro);
@@ -344,12 +383,11 @@ export default function NovoLembrete() {
       contentContainerStyle={styles.conteudo}
       keyboardShouldPersistTaps="handled"
     >
-    
-
       <View style={styles.cabecalho}>
         <TouchableOpacity
           onPress={() => router.back()}
           style={styles.voltar}
+          disabled={sucesso}
         >
           <FontAwesome
             name="arrow-left"
@@ -363,7 +401,26 @@ export default function NovoLembrete() {
         </Text>
       </View>
 
+      
+      {sucesso && (
+        <View style={styles.mensagemSucesso}>
+          <FontAwesome
+            name="check-circle"
+            size={27}
+            color="#16A34A"
+          />
 
+          <View style={styles.textoMensagemSucesso}>
+            <Text style={styles.tituloSucesso}>
+              Lembrete criado com sucesso!
+            </Text>
+
+            <Text style={styles.descricaoSucesso}>
+              Seu lembrete foi salvo e já está na sua lista.
+            </Text>
+          </View>
+        </View>
+      )}
 
       <View style={styles.painel}>
         <CampoTexto
@@ -385,8 +442,6 @@ export default function NovoLembrete() {
         />
       </View>
 
-     
-
       <View style={styles.painel}>
         <Text style={styles.labelPainel}>
           Data e horário
@@ -396,6 +451,7 @@ export default function NovoLembrete() {
           style={styles.seletor}
           onPress={() => setMostrarCalendario(true)}
           activeOpacity={0.7}
+          disabled={sucesso}
         >
           <FontAwesome
             name="calendar"
@@ -434,6 +490,7 @@ export default function NovoLembrete() {
           style={styles.seletor}
           onPress={() => setMostrarRelogio(true)}
           activeOpacity={0.7}
+          disabled={sucesso}
         >
           <FontAwesome
             name="clock-o"
@@ -469,8 +526,6 @@ export default function NovoLembrete() {
         )}
       </View>
 
-     
-
       <View style={styles.painel}>
         <Text style={styles.labelPainel}>
           Prioridade do lembrete
@@ -489,6 +544,7 @@ export default function NovoLembrete() {
                 key={opcao.valor}
                 activeOpacity={0.7}
                 onPress={() => setPrioridade(opcao.valor)}
+                disabled={sucesso}
                 style={[
                   styles.opcaoPrioridade,
                   {
@@ -535,8 +591,6 @@ export default function NovoLembrete() {
         </View>
       </View>
 
-      
-
       <View style={styles.opcaoDiaria}>
         <View style={styles.textoDiario}>
           <Text style={styles.tituloDiario}>
@@ -551,6 +605,7 @@ export default function NovoLembrete() {
         <Switch
           value={diario}
           onValueChange={setDiario}
+          disabled={sucesso}
           trackColor={{
             false: '#CBD5E1',
             true: '#93C5FD',
@@ -558,8 +613,6 @@ export default function NovoLembrete() {
           thumbColor={diario ? '#2563EB' : '#F8FAFC'}
         />
       </View>
-
-      
 
       <View style={styles.botoes}>
         <View style={styles.botaoMetade}>
